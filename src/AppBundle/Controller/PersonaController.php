@@ -84,6 +84,10 @@ class PersonaController extends Controller {
         $deleteForm = $this->createDeleteForm($persona);
         $editForm = $this->createForm('AppBundle\Form\PersonaType', $persona);
         $editForm->handleRequest($request);
+        
+        if ($persona->getFoto() === null && $fileOld !== null) {
+           $persona->setFoto($fileOld);
+        }
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
